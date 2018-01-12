@@ -3,5 +3,8 @@
   "version": "0.1.0",
   "description": "Server that updates a moving list of highscores",
   "author": "Fadi Alladkani",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "start": "node server.js"
+  }
 }
