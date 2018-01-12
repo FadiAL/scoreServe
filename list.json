@@ -1,0 +1,24 @@
+{
+  "list" : [
+    {
+      "name":"Sir MixAlot",
+      "score":5000
+    }
+    {
+      "name":"Tiny Tim",
+      "score":5000
+    }
+    {
+      "name":"Johnson",
+      "score":1000
+    }
+    {
+      "name":"Benedict Crumplesack",
+      "score":3000
+    }
+    {
+      "name":"Benedict Cockletit",
+      "score":500
+    }
+  ]
+}
