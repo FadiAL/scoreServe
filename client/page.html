@@ -4,9 +4,31 @@
     <meta charset="utf-8">
     <meta lang="en">
     <link rel="stylesheet" href="stylesheets/normalize.css">
-    <link rel="stylesheet" href="skeleton.css">
+    <link rel="stylesheet" href="stylesheets/skeleton.css">
     <title>Score Server Test</title>
   </head>
   <body>
+    <div class="container">
+      <table class="u-full-width">
+        <thread>
+          <th>Name</th>
+          <th>Score</th>
+        </thread>
+        <tbody id="cTable">
+        </tbody>
+      </table>
+      <form>
+        <div class="row">
+          <div class="six columns">
+            <label for="nameInput">Add Name</label>
+            <input class="u-full-width" placeholder="e.g. Admiral General Aladeen">
+          </div>
+          <div class="six columns">
+            <label for="scoreInput">Add Score</label>
+            <input class="u-full-width" placeholder="e.g. 1234">
+        </div>
+        <input class="button-primary" value="Submit" type="submit">
+      </form>
+    </div>
   </body>
 </html>
