@@ -6,5 +6,8 @@
   "license": "MIT",
   "scripts": {
     "start": "node server.js"
+  },
+  "dependencies": {
+    "mime": "^2.2.0"
   }
 }
