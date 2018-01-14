@@ -1,6 +1,7 @@
 var fs = require("fs");
 var http = require("http");
 var path = require("path");
+var qs = require("querystring");
 var mime = require("mime");
 var scores;
 
@@ -17,6 +18,18 @@ function readSheet(){
   });
 }
 var server = http.createServer(function(request, response){
+  if(request.method === "POST"){
+    var rBody;
+    request.on("data", function(data){
+      rBody+=data;
+    });
+    request.on("end", function(){
+      console.log(rBody);
+      var data = qs.parse(rBody);
+      console.log("Obtained data:", data.undefinedperson, data.score);
+      scores.list.push({name: data.undefinedperson, score: data.score});
+    });
+  }
   if(request.url.substr(1) == "list.json"){
     console.log("LIST REQUESTED");
     response.writeHead(200, {"Content-Type": mime.getType(request.url)});
