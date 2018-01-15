@@ -10,9 +10,17 @@ fs.exists("list.json", function(exists){
     readSheet();
 });
 function readSheet(){
-  fs.readFile("list.json", function(err, data){
+  fs.readFile("list.saved.json", function(err, data){
     if(err)
-      console.log("PANIC");
+      fs.readFile("list.json", function(err, data){
+        console.log("Saved list not found, loading list.json");
+        if(err){
+          console.log("list.json not found, creating empty list");
+          scores = {};
+          scores.list = [];
+        }
+        scores = JSON.parse(data);
+      });
     else
       scores = JSON.parse(data);
   });
@@ -28,6 +36,9 @@ var server = http.createServer(function(request, response){
       var data = qs.parse(rBody);
       console.log("Obtained data:", data.undefinedperson, data.score);
       scores.list.push({name: data.undefinedperson, score: data.score});
+      fs.writeFile("list.saved.json", JSON.stringify(scores), function(err){
+        console.log("ERROR SAVING FILE");
+      });
     });
   }
   if(request.url.substr(1) == "list.json"){
