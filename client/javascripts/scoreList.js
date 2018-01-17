@@ -2,6 +2,7 @@ var list;
 $(document).ready(function(){
   $.getJSON("/list.json", function(data){
     list = data.list;
+    sort();
     populate();
   });
 });
@@ -12,4 +13,9 @@ function populate(){
     row.append("<td>" + list[i].score + "</td>");
     $("#cTable").append(row);
   }
+}
+function sort(){
+  list.sort(function(a, b){
+    return b.score - a.score;
+  });
 }
