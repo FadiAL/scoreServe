@@ -60,12 +60,6 @@ server.listen(8989, function(){
   console.log("Server listening on port 8989");
 });
 function serveFile(filePath, response){
-  fs.readFile(filePath, function(err, data){
-    if(!err){
-      console.log("FOUND:", filePath);
-      response.writeHead(200, {"Content-Type": mime.getType(filePath)});
-      response.write(data);
-    }
-    response.end();
-  });
+  response.writeHead(200, {"Content-Type": mime.getType(filePath)});
+  fs.createReadStream(filePath).pipe(response);
 }
