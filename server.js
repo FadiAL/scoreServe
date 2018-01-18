@@ -43,8 +43,10 @@ var server = http.createServer(function(request, response){
   }
   if(request.url.substr(1) == "list.json"){
     console.log("LIST REQUESTED");
+    var body = JSON.stringify(scores);
+    response.setHeader("Content-Length", Buffer.byteLength(body))
     response.writeHead(200, {"Content-Type": mime.getType(request.url)});
-    response.write(JSON.stringify(scores));
+    response.write(body);
     response.end();
   }
   else if(request.url == "/")
