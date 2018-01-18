@@ -60,7 +60,6 @@ server.listen(8989, function(){
   console.log("Server listening on port 8989");
 });
 function serveFile(filePath, response){
-  response.writeHead(200, {"Content-Type": mime.getType(filePath)});
   fs.stat(filePath, function(err, stats){
     if(err){
       if(err.code == "ENOENT")
@@ -68,16 +67,20 @@ function serveFile(filePath, response){
       else
         throwInternalError(response);
     }
-  });
-  var stream = fs.createReadStream(filePath);
-  stream.pipe(response);
-  stream.on("error", function(err){
-    throwInternalError(response);
+    else{
+      response.setHeader("Content-Type", mime.getType(filePath));
+      response.setHeader("Content-Length", stats.size);
+      var stream = fs.createReadStream(filePath);
+      stream.pipe(response);
+      stream.on("error", function(err){
+        throwInternalError(response);
+      });
+    }
   });
 }
 function throwInternalError(response){
   response.statusCode = 500;
-  response.end("Internal Server Error")
+  response.end("Internal Server Error");
 }
 function throwNotFoundError(response){
   response.statusCode = 404;
