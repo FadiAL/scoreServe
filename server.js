@@ -61,5 +61,10 @@ server.listen(8989, function(){
 });
 function serveFile(filePath, response){
   response.writeHead(200, {"Content-Type": mime.getType(filePath)});
-  fs.createReadStream(filePath).pipe(response);
+  var stream = fs.createReadStream(filePath);
+  stream.pipe(response);
+  stream.on("error", function(err){
+    response.statusCode = 500;
+    response.end("Internal Server Error");
+  });
 }
