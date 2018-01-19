@@ -5,10 +5,7 @@ var qs = require("querystring");
 var mime = require("mime");
 var scores;
 
-fs.exists("list.json", function(exists){
-  if(exists)
-    readSheet();
-});
+readSheet();
 function readSheet(){
   fs.readFile("list.saved.json", function(err, data){
     if(err)
