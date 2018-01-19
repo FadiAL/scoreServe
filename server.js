@@ -15,6 +15,7 @@ function readSheet(){
           console.log("list.json not found, creating empty list");
           scores = {};
           scores.list = [];
+          return;
         }
         scores = JSON.parse(data);
       });
