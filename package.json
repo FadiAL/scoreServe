@@ -6,9 +6,11 @@
   "license": "MIT",
   "scripts": {
     "start": "node server.js",
-    "restart":"rm list.saved.json && node server.js"
+    "restart": "rm list.saved.json && node server.js"
   },
   "dependencies": {
-    "mime": "^2.2.0"
+    "mime": "^2.2.0",
+    "mysql": "^2.15.0",
+    "random-name": "^0.1.2"
   }
 }
