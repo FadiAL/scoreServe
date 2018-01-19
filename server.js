@@ -17,6 +17,12 @@ function readSheet(){
           console.log("list.json not found, creating empty list");
           populateRandom(100);
           console.log("Generated list");
+          fs.writeFile("list.json", JSON.stringify(scores), function(err){
+            if(err)
+              console.log("Error: Could not save new file");
+            else
+              console.log("File saved as list.json");
+          });
           return;
         }
         scores = JSON.parse(data);
