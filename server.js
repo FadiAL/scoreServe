@@ -31,6 +31,9 @@ function readSheet(){
       scores = JSON.parse(data);
   });
 }
+
+//SERVER METHODS
+
 var server = http.createServer(function(request, response){
   if(request.method === "POST"){
     var rBody;
@@ -84,6 +87,9 @@ function serveFile(filePath, response){
     }
   });
 }
+
+//SERVER ERRORS
+
 function throwInternalError(response){
   response.statusCode = 500;
   response.end("Internal Server Error");
