@@ -65,7 +65,6 @@ var server = http.createServer(function(request, response){
     });
     request.on("end", function(){
       var data = qs.parse(rBody);
-      scores.list.push({name: data.undefinedperson, score: data.score});
       db.query(
         "INSERT INTO scores (name, score) " +
         "VALUES (?, ?)",
@@ -77,11 +76,21 @@ var server = http.createServer(function(request, response){
   }
   if(request.url.substr(1) == "list.json"){
     console.log("LIST REQUESTED");
-    var body = JSON.stringify(scores);
-    response.setHeader("Content-Length", Buffer.byteLength(body));
-    response.writeHead(200, {"Content-Type": mime.getType(request.url)});
-    response.write(body);
-    response.end();
+    var body = db.query(
+      "SELECT * from scores",
+      function(err, row){
+        if(err){
+          console.log("Error: Could not read from database");
+          console.log(err);
+          return;
+        }
+        var data = {"list": row};
+        console.log("Sending:", data);
+        response.setHeader("Content-Length", Buffer.byteLength(JSON.stringify(data)));
+        response.writeHead(200, {"Content-Type": mime.getType(request.url)});
+        response.write(JSON.stringify(data));
+        response.end();
+      });
   }
   else if(request.url == "/")
     serveFile("./client/page.html", response);
