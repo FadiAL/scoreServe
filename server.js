@@ -6,14 +6,15 @@ var mime = require("mime");
 
 var rName = require("random-name");
 var mysql = require("mysql");
+var cfg = require("./config.json");
 var scores;
 
 //readSheet();
 var db = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "greatescape",
-  database: "nodeTables"
+  host: cfg.host,
+  user: cfg.username,
+  password: cfg.password,
+  database: cfg.database
 });
 db.query(
   "CREATE TABLE IF NOT EXISTS scores("
