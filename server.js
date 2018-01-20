@@ -64,13 +64,15 @@ var server = http.createServer(function(request, response){
       rBody+=data;
     });
     request.on("end", function(){
-      console.log(rBody);
       var data = qs.parse(rBody);
-      console.log("Obtained data:", data.undefinedperson, data.score);
       scores.list.push({name: data.undefinedperson, score: data.score});
-      fs.writeFile("list.saved.json", JSON.stringify(scores), function(err){
-        console.log("ERROR SAVING FILE");
-      });
+      db.query(
+        "INSERT INTO scores (name, score) " +
+        "VALUES (?, ?)",
+        [data.undefinedperson, data.score], function(err){
+          console.log("Error: Could not save information to scores");
+          console.log(err);
+        });
     });
   }
   if(request.url.substr(1) == "list.json"){
