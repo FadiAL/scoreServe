@@ -9,7 +9,6 @@ var mysql = require("mysql");
 var cfg = require("./config.json");
 var scores;
 
-//readSheet();
 var db = mysql.createConnection({
   host: cfg.host,
   user: cfg.username,
@@ -31,30 +30,6 @@ db.query(
     });
   }
 )
-
-function readSheet(){
-  fs.readFile("list.saved.json", function(err, data){
-    if(err)
-      fs.readFile("list.json", function(err, data){
-        console.log("Saved list not found, loading list.json");
-        if(err){
-          console.log("list.json not found, creating empty list");
-          populateRandom(100);
-          console.log("Generated list");
-          fs.writeFile("list.json", JSON.stringify(scores), function(err){
-            if(err)
-              console.log("Error: Could not save new file");
-            else
-              console.log("File saved as list.json");
-          });
-          return;
-        }
-        scores = JSON.parse(data);
-      });
-    else
-      scores = JSON.parse(data);
-  });
-}
 
 //SERVER METHODS
 
@@ -86,7 +61,6 @@ var server = http.createServer(function(request, response){
           return;
         }
         var data = {"list": row};
-        console.log("Sending:", data);
         response.setHeader("Content-Length", Buffer.byteLength(JSON.stringify(data)));
         response.writeHead(200, {"Content-Type": mime.getType(request.url)});
         response.write(JSON.stringify(data));
@@ -129,17 +103,4 @@ function throwInternalError(response){
 function throwNotFoundError(response){
   response.statusCode = 404;
   response.end("File Not Found");
-}
-
-//HELPER FUNCTIONS
-
-function populateRandom(num){
-  scores = {};
-  scores.list = [];
-  for(var i = 0; i < num; i++){
-    scores.list.push({name: rName(), score: randomNum(0, 10000)});
-  }
-}
-function randomNum(min, max){
-  return Math.floor(Math.random()*(max-min)) + min;
 }
