@@ -5,9 +5,32 @@ var qs = require("querystring");
 var mime = require("mime");
 
 var rName = require("random-name");
+var mysql = require("mysql");
 var scores;
 
-readSheet();
+//readSheet();
+var db = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "greatescape",
+  database: "nodeTables"
+});
+db.query(
+  "CREATE TABLE IF NOT EXISTS scores("
+  + "name varchar(30), "
+  + "score INT(6))",
+  function(err){
+    if(err){
+      console.log("Could not create database table, is mySQL properly set up?", err);
+      return;
+    }
+    console.log("Database table scores created");
+    server.listen(8989, function(){
+      console.log("Server listening on port 8989");
+    });
+  }
+)
+
 function readSheet(){
   fs.readFile("list.saved.json", function(err, data){
     if(err)
@@ -65,9 +88,6 @@ var server = http.createServer(function(request, response){
     serveFile("." + request.url, response);
   }
 });
-server.listen(8989, function(){
-  console.log("Server listening on port 8989");
-});
 function serveFile(filePath, response){
   fs.stat(filePath, function(err, stats){
     if(err){
@@ -100,6 +120,7 @@ function throwNotFoundError(response){
 }
 
 //HELPER FUNCTIONS
+
 function populateRandom(num){
   scores = {};
   scores.list = [];
