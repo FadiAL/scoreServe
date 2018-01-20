@@ -45,8 +45,10 @@ var server = http.createServer(function(request, response){
         "INSERT INTO scores (name, score) " +
         "VALUES (?, ?)",
         [data.undefinedperson, data.score], function(err){
-          console.log("Error: Could not save information to scores");
-          console.log(err);
+          if(err){
+            console.log("Error: Could not save information to scores");
+            console.log(err);
+          }
         });
     });
   }
