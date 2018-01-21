@@ -20,7 +20,8 @@ db.query(
   + "id INT(10) NOT NULL AUTO_INCREMENT, "
   + "name varchar(30), "
   + "score INT(6), "
-  + "rank INT(4));",
+  + "rank INT(4), "
+  + "PRIMARY KEY(id));",
   function(err){
     if(err){
       console.log("Could not create database table, is mySQL properly set up?", err);
