@@ -2,7 +2,7 @@ var list;
 $(document).ready(function(){
   $.getJSON("/list.json", function(data){
     list = data.list;
-    //sort();
+    sort();
     populate();
   });
 });
@@ -17,6 +17,6 @@ function populate(){
 }
 function sort(){
   list.sort(function(a, b){
-    return b.score - a.score;
+    return a.rank - b.rank;
   });
 }
