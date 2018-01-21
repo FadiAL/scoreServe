@@ -47,13 +47,14 @@ var server = http.createServer(function(request, response){
       db.query(
         "INSERT INTO scores (name, score, rank) " +
         "VALUES (?, ?, 0)",
-        [data.undefinedperson, data.score], function(err){
+        [data.undefinedperson, data.score], function(err, result){
           if(err){
             console.log("Error: Could not save information to scores");
             console.log(err);
           }
           console.log("Added info");
-          rank(data.score);
+          rank();
+          //rank2(result.insertId, data.score);
         });
     });
   }
@@ -116,7 +117,20 @@ function rank(){
       }
     });
 }
-
+function rank2(id, score){
+  console.log("USING SECOND RANKING", id, score);
+  db.query(
+    "SELECT COUNT(*) AS r FROM scores WHERE score > " + score + ";"
+  , function(err, data){
+    db.query(
+      "UPDATE scores SET rank = rank + 1 WHERE score < " + score + ";"
+    , function(){
+      db.query(
+        "UPDATE scores SET rank = " + (data[0].r + 1) + " WHERE id = " + id + ";"
+      );
+    });
+  });
+}
 //SERVER ERRORS
 
 function throwInternalError(response){
