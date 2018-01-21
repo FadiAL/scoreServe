@@ -109,7 +109,7 @@ function rank(){
     function(err, data){
       if(err)
         console.log("Error sorting table", err);
-      for(var i = 0; i < data.length; i++){
+      for(var i = 0; data && i < data.length; i++){
         db.query(
           "UPDATE scores SET rank = " + (i+1) + " WHERE id = " + data[i].id + ";"
         );
