@@ -53,8 +53,8 @@ var server = http.createServer(function(request, response){
             console.log(err);
           }
           console.log("Added info");
-          rank();
-          //rank2(result.insertId, data.score);
+          //rank();
+          rank2(result.insertId, data.score);
         });
     });
   }
