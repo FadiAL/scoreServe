@@ -117,7 +117,6 @@ function rank(){
     });
 }
 function rank2(id, score){
-  console.log("USING SECOND RANKING", id, score);
   db.query(
     "SELECT COUNT(*) AS r FROM scores WHERE score > " + score + ";"
   , function(err, data){
