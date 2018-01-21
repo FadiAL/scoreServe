@@ -17,8 +17,10 @@ var db = mysql.createConnection({
 });
 db.query(
   "CREATE TABLE IF NOT EXISTS scores("
+  + "id INT(10) NOT NULL AUTO_INCREMENT, "
   + "name varchar(30), "
-  + "score INT(6))",
+  + "score INT(6), "
+  + "rank INT(4));",
   function(err){
     if(err){
       console.log("Could not create database table, is mySQL properly set up?", err);
@@ -42,13 +44,15 @@ var server = http.createServer(function(request, response){
     request.on("end", function(){
       var data = qs.parse(rBody);
       db.query(
-        "INSERT INTO scores (name, score) " +
-        "VALUES (?, ?)",
+        "INSERT INTO scores (name, score, rank) " +
+        "VALUES (?, ?, 0)",
         [data.undefinedperson, data.score], function(err){
           if(err){
             console.log("Error: Could not save information to scores");
             console.log(err);
           }
+          console.log("Added info");
+          sort(data.score);
         });
     });
   }
@@ -94,6 +98,12 @@ function serveFile(filePath, response){
       });
     }
   });
+}
+
+//HELPER FUNCTIONS
+
+function sort(){
+  //db.query();
 }
 
 //SERVER ERRORS
