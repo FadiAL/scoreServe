@@ -53,7 +53,7 @@ var server = http.createServer(function(request, response){
             console.log(err);
           }
           console.log("Added info");
-          sort(data.score);
+          rank(data.score);
         });
     });
   }
@@ -103,8 +103,18 @@ function serveFile(filePath, response){
 
 //HELPER FUNCTIONS
 
-function sort(){
-  //db.query();
+function rank(){
+  db.query(
+    "SELECT id, score FROM scores ORDER BY score DESC;",
+    function(err, data){
+      if(err)
+        console.log("Error sorting table", err);
+      for(var i = 0; i < data.length; i++){
+        db.query(
+          "UPDATE scores SET rank = " + (i+1) + " WHERE id = " + data[i].id + ";"
+        );
+      }
+    });
 }
 
 //SERVER ERRORS
