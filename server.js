@@ -103,19 +103,6 @@ function serveFile(filePath, response){
 
 //HELPER FUNCTIONS
 
-function rank(){
-  db.query(
-    "SELECT id, score FROM scores ORDER BY score DESC;",
-    function(err, data){
-      if(err)
-        console.log("Error sorting table", err);
-      for(var i = 0; data && i < data.length; i++){
-        db.query(
-          "UPDATE scores SET rank = " + (i+1) + " WHERE id = " + data[i].id + ";"
-        );
-      }
-    });
-}
 function rank2(id, score){
   db.query(
     "SELECT COUNT(*) AS r FROM scores WHERE score > " + score + ";"
@@ -129,6 +116,7 @@ function rank2(id, score){
     });
   });
 }
+
 //SERVER ERRORS
 
 function throwInternalError(response){
