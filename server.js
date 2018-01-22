@@ -4,7 +4,6 @@ var path = require("path");
 var qs = require("querystring");
 var mime = require("mime");
 
-var rName = require("random-name");
 var mysql = require("mysql");
 var cfg = require("./config.json");
 var scores;
