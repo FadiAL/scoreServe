@@ -3,6 +3,7 @@ var http = require("http");
 var path = require("path");
 var qs = require("querystring");
 var mime = require("mime");
+var express = require("express");
 
 var mysql = require("mysql");
 var cfg = require("./config.json");
