@@ -9,6 +9,7 @@
     "restart": "rm list.saved.json && node server.js"
   },
   "dependencies": {
+    "express": "^4.16.2",
     "mime": "^2.2.0",
     "mysql": "^2.15.0"
   }
