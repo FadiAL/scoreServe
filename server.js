@@ -9,30 +9,10 @@ var mysql = require("mysql");
 var cfg = require("./config.json");
 var scores;
 
-var db = mysql.createConnection({
-  host: cfg.host,
-  user: cfg.username,
-  password: cfg.password,
-  database: cfg.database
-});
-db.query(
-  "CREATE TABLE IF NOT EXISTS scores("
-  + "id INT(10) NOT NULL AUTO_INCREMENT, "
-  + "name varchar(30), "
-  + "score INT(6), "
-  + "rank INT(4), "
-  + "PRIMARY KEY(id));",
-  function(err){
-    if(err){
-      console.log("Could not create database table, is mySQL properly set up?", err);
-      return;
-    }
-    console.log("Database table scores created");
-    server.listen(8989, function(){
-      console.log("Server listening on port 8989");
-    });
-  }
-)
+var app = express();
+var db;
+
+createTable();
 
 //SERVER METHODS
 
@@ -44,17 +24,7 @@ var server = http.createServer(function(request, response){
     });
     request.on("end", function(){
       var data = qs.parse(rBody);
-      db.query(
-        "INSERT INTO scores (name, score, rank) " +
-        "VALUES (?, ?, 0)",
-        [data.undefinedperson, data.score], function(err, result){
-          if(err){
-            console.log("Error: Could not save information to scores");
-            console.log(err);
-          }
-          console.log("Added info");
-          rank2(result.insertId, data.score);
-        });
+      insert(data);
     });
   }
   if(request.url.substr(1) == "list.json"){
@@ -114,6 +84,48 @@ function rank2(id, score){
       );
     });
   });
+}
+
+function insert(data){
+  db.query(
+    "INSERT INTO scores (name, score, rank) " +
+    "VALUES (?, ?, 0)",
+    [data.undefinedperson, data.score], function(err, result){
+      if(err){
+        console.log("Error: Could not save information to scores");
+        console.log(err);
+      }
+      console.log("Added info");
+      rank2(result.insertId, data.score);
+    });
+}
+
+function createTable(){
+  db = mysql.createConnection({
+    host: cfg.host,
+    user: cfg.username,
+    password: cfg.password,
+    database: cfg.database
+  });
+
+  db.query(
+    "CREATE TABLE IF NOT EXISTS scores("
+    + "id INT(10) NOT NULL AUTO_INCREMENT, "
+    + "name varchar(30), "
+    + "score INT(6), "
+    + "rank INT(4), "
+    + "PRIMARY KEY(id));",
+    function(err){
+      if(err){
+        console.log("Could not create database table, is mySQL properly set up?", err);
+        return;
+      }
+      console.log("Database table scores created");
+      server.listen(8989, function(){
+        console.log("Server listening on port 8989");
+      });
+    }
+  );
 }
 
 //SERVER ERRORS
