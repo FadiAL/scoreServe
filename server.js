@@ -60,25 +60,6 @@ server.listen(8080);
     serveFile("." + request.url, response);
   }
 });*/
-function serveFile(filePath, response){
-  fs.stat(filePath, function(err, stats){
-    if(err){
-      if(err.code == "ENOENT")
-        throwNotFoundError(response);
-      else
-        throwInternalError(response);
-    }
-    else{
-      response.setHeader("Content-Type", mime.getType(filePath));
-      response.setHeader("Content-Length", stats.size);
-      var stream = fs.createReadStream(filePath);
-      stream.pipe(response);
-      stream.on("error", function(err){
-        throwInternalError(response);
-      });
-    }
-  });
-}
 
 //HELPER FUNCTIONS
 
