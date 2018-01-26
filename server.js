@@ -4,6 +4,7 @@ var path = require("path");
 var qs = require("querystring");
 var mime = require("mime");
 var express = require("express");
+var log = require('morgan');
 
 var mysql = require("mysql");
 var cfg = require("./config.json");
@@ -16,7 +17,16 @@ createTable();
 
 //SERVER METHODS
 
-var server = http.createServer(function(request, response){
+app.use(log('dev'));
+app.use(express.static(path.join(__dirname, 'client')));
+app.get('/', function(req, res, next){
+  res.sendFile(path.join(__dirname, 'client/page.html'));
+});
+app.set('port', 8080);
+var server = http.createServer(app);
+server.listen(8080);
+
+/*var server = http.createServer(function(request, response){
   if(request.method === "POST"){
     var rBody;
     request.on("data", function(data){
@@ -49,7 +59,7 @@ var server = http.createServer(function(request, response){
   else{
     serveFile("." + request.url, response);
   }
-});
+});*/
 function serveFile(filePath, response){
   fs.stat(filePath, function(err, stats){
     if(err){
@@ -121,9 +131,6 @@ function createTable(){
         return;
       }
       console.log("Database table scores created");
-      server.listen(8989, function(){
-        console.log("Server listening on port 8989");
-      });
     }
   );
 }
