@@ -22,6 +22,14 @@ app.use(express.static(path.join(__dirname, 'client')));
 app.get('/', function(req, res, next){
   res.sendFile(path.join(__dirname, 'client/page.html'));
 });
+app.get('/list.json', function(req, res, next){
+  db.query("SELECT * FROM scores", function(err, rows){
+    if(err)
+      next(err);
+    var data = {"list": rows};
+    res.end(JSON.stringify(data));
+  })
+});
 app.set('port', 8080);
 var server = http.createServer(app);
 server.listen(8080);
