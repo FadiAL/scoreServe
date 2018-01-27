@@ -3,8 +3,10 @@ var http = require("http");
 var path = require("path");
 var qs = require("querystring");
 var mime = require("mime");
+
 var express = require("express");
 var log = require('morgan');
+var bodyParser = require('body-parser');
 
 var mysql = require("mysql");
 var cfg = require("./config.json");
@@ -19,6 +21,7 @@ createTable();
 //SERVER METHODS
 
 app.use(log('dev'));
+app.use(bodyParser.urlEncoded({extended: false}));
 app.use(express.static(path.join(__dirname, 'client')));
 app.use('/list.json', listR(db));
 app.get('/', function(req, res, next){
