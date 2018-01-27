@@ -10,6 +10,7 @@ var mysql = require("mysql");
 var cfg = require("./config.json");
 var scores;
 
+var listR = require(path.join(__dirname, 'routes/list.js'));
 var app = express();
 var db;
 
@@ -19,16 +20,9 @@ createTable();
 
 app.use(log('dev'));
 app.use(express.static(path.join(__dirname, 'client')));
+app.use('/list.json', listR(db));
 app.get('/', function(req, res, next){
   res.sendFile(path.join(__dirname, 'client/page.html'));
-});
-app.get('/list.json', function(req, res, next){
-  db.query("SELECT * FROM scores", function(err, rows){
-    if(err)
-      next(err);
-    var data = {"list": rows};
-    res.end(JSON.stringify(data));
-  })
 });
 app.set('port', 8080);
 var server = http.createServer(app);
