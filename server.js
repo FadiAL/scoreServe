@@ -20,10 +20,10 @@ createTable();
 app.use(log('dev'));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use('/list.json', listR(db));
-app.use(express.static(path.join(__dirname, 'client')));
 app.get('/', function(req, res, next){
   res.sendFile(path.join(__dirname, 'client/page.html'));
 });
+app.use(express.static(path.join(__dirname, 'client')));
 app.set('port', 8080);
 var server = http.createServer(app);
 server.listen(8080);
