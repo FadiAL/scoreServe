@@ -12,7 +12,7 @@ var mysql = require("mysql");
 var cfg = require("./config.json");
 var scores;
 
-var listR = require(path.join(__dirname, 'routes/list.js'));
+var listR = require(path.join(__dirname, 'modules/list.js'));
 var app = express();
 var db;
 
@@ -21,7 +21,7 @@ createTable();
 //SERVER METHODS
 
 app.use(log('dev'));
-app.use(bodyParser.urlEncoded({extended: false}));
+app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static(path.join(__dirname, 'client')));
 app.use('/list.json', listR(db));
 app.get('/', function(req, res, next){
