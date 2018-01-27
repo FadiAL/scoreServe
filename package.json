@@ -9,6 +9,7 @@
     "restart": "rm list.saved.json && node server.js"
   },
   "dependencies": {
+    "body-parser": "^1.18.2",
     "express": "^4.16.2",
     "mime": "^2.2.0",
     "morgan": "^1.9.0",
