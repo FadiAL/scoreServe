@@ -1,8 +1,5 @@
-var fs = require("fs");
 var http = require("http");
 var path = require("path");
-var qs = require("querystring");
-var mime = require("mime");
 
 var express = require("express");
 var log = require('morgan');
@@ -31,70 +28,7 @@ app.set('port', 8080);
 var server = http.createServer(app);
 server.listen(8080);
 
-/*var server = http.createServer(function(request, response){
-  if(request.method === "POST"){
-    var rBody;
-    request.on("data", function(data){
-      rBody+=data;
-    });
-    request.on("end", function(){
-      var data = qs.parse(rBody);
-      insert(data);
-    });
-  }
-  if(request.url.substr(1) == "list.json"){
-    console.log("LIST REQUESTED");
-    var body = db.query(
-      "SELECT * from scores",
-      function(err, row){
-        if(err){
-          console.log("Error: Could not read from database");
-          console.log(err);
-          return;
-        }
-        var data = {"list": row};
-        response.setHeader("Content-Length", Buffer.byteLength(JSON.stringify(data)));
-        response.writeHead(200, {"Content-Type": mime.getType(request.url)});
-        response.write(JSON.stringify(data));
-        response.end();
-      });
-  }
-  else if(request.url == "/")
-    serveFile("./client/page.html", response);
-  else{
-    serveFile("." + request.url, response);
-  }
-});*/
-
 //HELPER FUNCTIONS
-
-function rank2(id, score){
-  db.query(
-    "SELECT COUNT(*) AS r FROM scores WHERE score > " + score + ";"
-  , function(err, data){
-    db.query(
-      "UPDATE scores SET rank = rank + 1 WHERE score < " + score + ";"
-    , function(){
-      db.query(
-        "UPDATE scores SET rank = " + (data[0].r + 1) + " WHERE id = " + id + ";"
-      );
-    });
-  });
-}
-
-function insert(data){
-  db.query(
-    "INSERT INTO scores (name, score, rank) " +
-    "VALUES (?, ?, 0)",
-    [data.undefinedperson, data.score], function(err, result){
-      if(err){
-        console.log("Error: Could not save information to scores");
-        console.log(err);
-      }
-      console.log("Added info");
-      rank2(result.insertId, data.score);
-    });
-}
 
 function createTable(){
   db = mysql.createConnection({
