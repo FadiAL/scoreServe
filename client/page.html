@@ -3,21 +3,22 @@
   <head>
     <meta charset="utf-8">
     <meta lang="en">
-    <link rel="stylesheet" href="client/stylesheets/normalize.css">
-    <link rel="stylesheet" href="client/stylesheets/skeleton.css">
+    <link rel="stylesheet" href="stylesheets/normalize.css">
+    <link rel="stylesheet" href="stylesheets/skeleton.css">
     <title>Score Server Test</title>
   </head>
   <body>
     <div class="container">
       <table class="u-full-width">
         <thread>
+          <th>Rank</th>
           <th>Name</th>
           <th>Score</th>
         </thread>
         <tbody id="cTable">
         </tbody>
       </table>
-      <form action="/" method="post">
+      <form action="/list.json" method="post">
         <div class="row">
           <div class="six columns">
             <label for="nameInput">Add Name</label>
@@ -32,6 +33,6 @@
       </form>
     </div>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script src="./client/javascripts/scoreList.js"></script>
+    <script src="./javascripts/scoreList.js"></script>
   </body>
 </html>

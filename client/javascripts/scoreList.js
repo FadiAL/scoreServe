@@ -9,6 +9,7 @@ $(document).ready(function(){
 function populate(){
   for(var i = 0; i < list.length; i++){
     var row = $("<tr></tr>");
+    row.append("<td>" + list[i].rank + "</td>");
     row.append("<td>" + list[i].name + "</td>");
     row.append("<td>" + list[i].score + "</td>");
     $("#cTable").append(row);
@@ -16,6 +17,6 @@ function populate(){
 }
 function sort(){
   list.sort(function(a, b){
-    return b.score - a.score;
+    return a.rank - b.rank;
   });
 }
