@@ -5,8 +5,7 @@
   "author": "Fadi Alladkani",
   "license": "MIT",
   "scripts": {
-    "start": "node server.js",
-    "restart": "rm list.saved.json && node server.js"
+    "start": "systemctl start mysqld && node server.js"
   },
   "dependencies": {
     "body-parser": "^1.18.2",
