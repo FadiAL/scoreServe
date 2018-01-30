@@ -23,8 +23,9 @@ module.exports = function(db){
       });
     });
   }
-  function sendInfo(res){
-    db.query("SELECT * FROM scores", function(err, rows){
+  function sendInfo(res, range, rank){
+    db.query("SELECT * FROM scores WHERE rank < " + rank +
+     " LIMIT " + range, function(err, rows){
       if(err)
       next(err);
       var data = {"list": rows};
@@ -32,11 +33,11 @@ module.exports = function(db){
     });
   }
   router.get('*', function(req, res, next){
-    sendInfo(res);
+    sendInfo(res, req.query.range, req.query.initR);
   });
   router.post('*', function(req, res, next){
     insert(req.body);
-    res.redirect('/');
+    res.redirect('/scores');
   });
 
   return router;
