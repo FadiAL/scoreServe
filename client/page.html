@@ -3,21 +3,14 @@
   <head>
     <meta charset="utf-8">
     <meta lang="en">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="stylesheets/normalize.css">
     <link rel="stylesheet" href="stylesheets/skeleton.css">
+    <link rel="stylesheet" href="stylesheets/main.css">
     <title>Score Server Test</title>
   </head>
   <body>
-    <div class="container">
-      <table class="u-full-width">
-        <thread>
-          <th>Rank</th>
-          <th>Name</th>
-          <th>Score</th>
-        </thread>
-        <tbody id="cTable">
-        </tbody>
-      </table>
+    <div class="container center">
       <form action="/list.json" method="post">
         <div class="row">
           <div class="six columns">
@@ -25,11 +18,14 @@
             <input class="u-full-width" type="text" placeholder="e.g. Admiral General Aladeen" name="person">
           </div>
           <div class="six columns">
-            <label for="scoreInput">Add Score</label>
+            <label for="scoreInput" class="u-pull-right">Add Score</label>
             <input class="u-full-width" type="number" placeholder="e.g. 1234" name="score">
           </div>
         </div>
-        <input class="button-primary" value="Submit" type="submit">
+        <br>
+        <div class="row">
+          <input class="button-primary u-full-width" value="Submit" type="submit">
+        </div>
       </form>
     </div>
   </body>
