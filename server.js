@@ -24,6 +24,9 @@ app.get('/', function(req, res, next){
   res.sendFile(path.join(__dirname, 'client/page.html'));
 });
 app.use(express.static(path.join(__dirname, 'client')));
+app.get('/scores', function(req, res, next){
+  res.render('scoreView', {});
+});
 
 app.set('port', 8080);
 app.set('views', path.join(__dirname, 'views'));
