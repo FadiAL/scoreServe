@@ -35,11 +35,11 @@ app.get('/scores', function(req, res, next){
   , function(err, data){
     db.query(
       "show table status;", function(err, stats){
-        var pages = stats[1].Rows/range;
-        var curPage = Math.floor(num/range);
+        var pages = Math.floor(Number(stats[1].Rows)/Number(range));
+        var curPage = Math.floor(Number(num)/Number(range));
+        res.render('scoreView', {scores: data, pages: pages, curPage: curPage});
       }
     );
-    res.render('scoreView', {scores: data, pages: pages, curPage: curPage});
   });
 });
 
