@@ -33,8 +33,13 @@ app.get('/scores', function(req, res, next){
      + num + " AND " + (Number(num)+ Number(range))
      + " ORDER BY rank;"
   , function(err, data){
-    console.log(data[3].rank);
-    res.render('scoreView', {scores: data});
+    db.query(
+      "show table status;", function(err, stats){
+        var pages = stats[1].Rows/range;
+        var curPage = Math.floor(num/range);
+      }
+    );
+    res.render('scoreView', {scores: data, pages: pages, curPage: curPage});
   });
 });
 
