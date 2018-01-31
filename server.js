@@ -25,13 +25,15 @@ app.get('/', function(req, res, next){
 });
 app.use(express.static(path.join(__dirname, 'client')));
 app.get('/scores', function(req, res, next){
-  var str = ''+req.query.rank + '0';
-  var num = str.slice(0, str.length-1);
-  console.log(num);
+  var str = ''+req.query.rank;
+  var num = str.slice(0, str.length-1) + '0';
+  var range = req.query.range;
   db.query(
-    "SELECT * FROM scores WHERE rank <= " + num + "LIMIT 10 ORDER BY rank;"
+    "SELECT name, score, rank FROM scores WHERE rank BETWEEN "
+     + num + " AND " + (Number(num)+ Number(range))
+     + " ORDER BY rank;"
   , function(err, data){
-    console.log(data);
+    console.log(data[3].rank);
     res.render('scoreView', {scores: data});
   });
 });
