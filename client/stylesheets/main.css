@@ -11,3 +11,9 @@ h1{
 .pageView{
   text-align: center;
 }
+img{
+  cursor: pointer;
+  margin-right: 20px;
+  margin-left: 20px;
+  vertical-align: middle;
+}
