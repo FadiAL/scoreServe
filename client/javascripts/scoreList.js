@@ -4,6 +4,7 @@ var range = 10;
 
 $(document).ready(function(){
   page = Number($("input")[0].value);
+  updatePage(page);
   pages = Number(/\d+/g.exec($(".pageView")[0].innerText)[0]);
 });
 
@@ -30,5 +31,5 @@ function move(destPage){
 }
 function updatePage(destPage){
   page = destPage;
-  $("input")[0].value = page;
+  $("input")[0].value = page+1;
 }
