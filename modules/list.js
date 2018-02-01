@@ -29,11 +29,12 @@ module.exports = function(db){
       if(err)
       next(err);
       var data = {"list": rows};
+      res.set('Content-Type', 'application/json');
       res.end(JSON.stringify(data));
     });
   }
   router.get('*', function(req, res, next){
-    sendInfo(res, req.query.range, req.query.initR);
+    sendInfo(res, req.query.range, req.query.rank);
   });
   router.post('*', function(req, res, next){
     insert(req.body, res);
