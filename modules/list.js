@@ -24,13 +24,16 @@ module.exports = function(db){
     });
   }
   function sendInfo(res, range, rank){
-    db.query("SELECT * FROM scores WHERE rank < " + rank +
-     " LIMIT " + range, function(err, rows){
-      if(err)
-      next(err);
-      var data = {"list": rows};
-      res.set('Content-Type', 'application/json');
-      res.end(JSON.stringify(data));
+    db.query(
+      "SELECT name, score, rank FROM scores WHERE rank BETWEEN "
+       + rank + " AND " + (Number(rank)+ Number(range))
+       + " ORDER BY rank;",
+        function(err, rows){
+         if(err)
+          next(err);
+         var data = {"list": rows};
+         res.set('Content-Type', 'application/json');
+         res.end(JSON.stringify(data));
     });
   }
   router.get('*', function(req, res, next){
