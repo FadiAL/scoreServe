@@ -6,6 +6,7 @@ $(document).ready(function(){
   page = Number($("input")[0].value);
   updatePage(page);
   pages = Number(/\d+/g.exec($(".pageView")[0].innerText)[0]);
+  setArrows();
   $("#input").submit(function(event){
     destPage = Number($("input")[0].value)-1;
     event.preventDefault();
@@ -37,4 +38,15 @@ function move(destPage){
 function updatePage(destPage){
   page = destPage;
   $("input")[0].value = page+1;
+  setArrows();
+}
+function setArrows(){
+  if(page > 0)
+    $("#left-arrow").attr("src", "icons/arrow-left-active.png");
+  else
+    $("#left-arrow").attr("src", "icons/arrow-left.png");
+  if(page < pages)
+    $("#right-arrow").attr("src", "icons/arrow-right-active.png");
+  else
+    $("#right-arrow").attr("src", "icons/arrow-right.png");
 }
