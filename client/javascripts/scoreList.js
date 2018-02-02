@@ -6,6 +6,11 @@ $(document).ready(function(){
   page = Number($("input")[0].value);
   updatePage(page);
   pages = Number(/\d+/g.exec($(".pageView")[0].innerText)[0]);
+  $("#input").submit(function(event){
+    destPage = Number($("input")[0].value)-1;
+    event.preventDefault();
+    move(destPage);
+  });
 });
 
 function moveLeft(){
