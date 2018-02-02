@@ -38,12 +38,12 @@
         </tbody>
       </table>
       <div class="pageView">
-        <img src="icons/arrow-left.png" onclick="moveLeft()">
+        <img id="left-arrow" src="icons/arrow-left.png" onclick="moveLeft()">
         <form id="input">
           <input class="pageField" type="text" value="<%= curPage %>">
         </form>
         <%= "/" + pages %>
-        <img src="icons/arrow-right.png" onclick="moveRight()">
+        <img id="right-arrow" src="icons/arrow-right.png" onclick="moveRight()">
       </div>
       <br>
     </div>
