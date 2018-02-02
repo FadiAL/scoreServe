@@ -35,7 +35,9 @@ app.get('/scores', function(req, res, next){
   , function(err, data){
     db.query(
       "show table status;", function(err, stats){
-        var pages = Math.floor(Number(stats[1].Rows)/Number(range));
+        var p1 = Number(stats[1].Rows)/Number(range); //Number of rows per page
+        //if p1 has a decimel, then we need one more page for the remainder
+        var pages = (p1 + "").indexOf('.') > 0 ? Math.floor(p1+1) : p1;
         var curPage = Math.floor(Number(num)/Number(range));
         res.render('scoreView', {scores: data, pages: pages, curPage: curPage});
       }
