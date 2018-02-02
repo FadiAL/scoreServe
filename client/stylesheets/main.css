@@ -21,5 +21,8 @@ img{
   background-color: cyan;
 }
 .pageField{
-  width: 40px
+  width: 50px
+}
+form{
+  display: inline;
 }
