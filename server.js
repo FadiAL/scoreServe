@@ -23,7 +23,14 @@ app.use('/list.json', listR(db));
 app.get('/', function(req, res, next){
   res.sendFile(path.join(__dirname, 'client/page.html'));
 });
-app.use(express.static(path.join(__dirname, 'client')));
+if(process.env.NODE_ENV === 'development'){
+  console.log('dev env detected');
+  app.use(express.static(path.join(__dirname, 'client')));
+}
+else {
+  console.log("prod env detected");
+  app.use(express.static(path.join(__dirname, 'client/build')));
+}
 app.get('/scores', function(req, res, next){
   var str = ''+req.query.rank;
   var num = str.slice(0, str.length-1) + '0';
