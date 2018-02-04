@@ -12,9 +12,9 @@ var scores;
 var listR = require(path.join(__dirname, 'modules/list.js'));
 var app = express();
 var db;
-var dbSetupDone = false, dbPingDone = false;
+var dbSetupDone = false, dbPingDone = true;
 var intervalId = setInterval(function(){
-  if(dbPingDone)
+  if(!dbPingDone)
     return;
   console.log("Pinging database");
   createTable();
@@ -73,13 +73,13 @@ function startServer(){
 }
 
 function createTable(){
+  dbPingDone = false;
   db = mysql.createConnection({
     host: cfg.host,
     user: cfg.username,
     password: cfg.password,
     database: cfg.database
   });
-
   db.query(
     "CREATE TABLE IF NOT EXISTS scores("
     + "id INT(10) NOT NULL AUTO_INCREMENT, "
