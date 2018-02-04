@@ -16,11 +16,13 @@ var dbSetupDone = false, dbPingDone = true;
 var intervalId = setInterval(function(){
   if(!dbPingDone)
     return;
-  console.log("Pinging database");
-  createTable();
   if(dbSetupDone){
     clearInterval(intervalId);
     startServer();
+  }
+  else{
+    console.log("Pinging database");
+    createTable();
   }
 }, 1000);
 
@@ -50,7 +52,8 @@ function startServer(){
       , function(err, data){
         db.query(
           "show table status;", function(err, stats){
-            var p1 = Number(stats[1].Rows)/Number(range); //Number of rows per page
+            var scores = stats.filter(function(t){return t.Name == 'scores'})[0];
+            var p1 = Number(scores.Rows)/Number(range); //Number of rows per page
             //if p1 has a decimel, then we need one more page for the remainder
             var pages = (p1 + "").indexOf('.') > 0 ? Math.floor(p1+1) : p1;
             var curPage = Math.floor(Number(num)/Number(range));
@@ -84,13 +87,14 @@ function createTable(){
     + "rank INT(4), "
     + "PRIMARY KEY(id));",
     function(err){
-      dbPingDone = true
       if(err){
         console.log("Could not create database table, is mySQL properly set up?", err);
+        dbPingDone = true;
         return;
       }
       console.log("Database table scores created");
       dbSetupDone = true;
+      dbPingDone = true;
     }
   );
 }
