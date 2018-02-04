@@ -12,8 +12,17 @@ var scores;
 var listR = require(path.join(__dirname, 'modules/list.js'));
 var app = express();
 var db;
-
-createTable();
+var dbSetupDone = false, dbPingDone = false;
+var intervalId = setInterval(function(){
+  if(dbPingDone)
+    return;
+  console.log("Pinging database");
+  createTable();
+  if(dbSetupDone){
+    clearInterval(intervalId);
+    startServer();
+  }
+}, 1000);
 
 //SERVER METHODS
 
@@ -56,10 +65,12 @@ app.set('port', 8080);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-var server = http.createServer(app);
-server.listen(8080);
-
 //HELPER FUNCTIONS
+
+function startServer(){
+  var server = http.createServer(app);
+  server.listen(8080);
+}
 
 function createTable(){
   db = mysql.createConnection({
@@ -81,7 +92,9 @@ function createTable(){
         console.log("Could not create database table, is mySQL properly set up?", err);
         return;
       }
+      dbPingDone = true;
       console.log("Database table scores created");
+      dbSetupDone = true;
     }
   );
 }
