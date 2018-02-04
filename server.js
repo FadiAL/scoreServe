@@ -88,11 +88,11 @@ function createTable(){
     + "rank INT(4), "
     + "PRIMARY KEY(id));",
     function(err){
+      dbPingDone = true
       if(err){
         console.log("Could not create database table, is mySQL properly set up?", err);
         return;
       }
-      dbPingDone = true;
       console.log("Database table scores created");
       dbSetupDone = true;
     }
