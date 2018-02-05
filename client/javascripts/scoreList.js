@@ -10,15 +10,21 @@ $(document).ready(function(){
   $("#input").submit(function(event){
     destPage = Number($("input")[0].value)-1;
     event.preventDefault();
+    if(destPage >= pages)
+      destPage = pages-1;
+    if(destPage < 0)
+      destPage = 0;
     move(destPage);
   });
 });
 
 function moveLeft(){
-  move(page-1);
+  if($('#left-arrow').attr('src').indexOf('active') > 0)
+    move(page-1);
 }
 function moveRight(){
-  move(page+1);
+  if($('#right-arrow').attr('src').indexOf('active') > 0)
+    move(page+1);
 }
 function move(destPage){
   $.getJSON("/list.json?range=" + range + "&rank=" + destPage*range,
@@ -45,7 +51,7 @@ function setArrows(){
     $("#left-arrow").attr("src", "icons/arrow-left-active.png");
   else
     $("#left-arrow").attr("src", "icons/arrow-left.png");
-  if(page < pages)
+  if(page < pages-1)
     $("#right-arrow").attr("src", "icons/arrow-right-active.png");
   else
     $("#right-arrow").attr("src", "icons/arrow-right.png");
