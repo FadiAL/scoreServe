@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta lang="en">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="stylesheets/normalize.css">
+    <link rel="stylesheet" href="stylesheets/skeleton.css">
+    <link rel="stylesheet" href="stylesheets/main.css">
+    <title>Score Server Test</title>
+  </head>
+  <body>
+    <br>
+    <h1> Score Server Prototype </h1>
+    <div class="container">
+      <table class="u-full-width">
+        <thread>
+          <tr>
+            <th>Rank</th>
+            <th>Name</th>
+            <th>Score</th>
+          </tr>
+        </thread>
+        <tbody id="cTable">
+          <% for(var i = 0; i < scores.length; i++) {%>
+            <tr>
+              <td>
+                <%= scores[i].rank %>
+              </td>
+              <td>
+                <%= scores[i].name %>
+              </td>
+              <td>
+                <%= scores[i].score %>
+              </td>
+            </tr>
+          <% } %>
+        </tbody>
+      </table>
+      <div class="pageView">
+        <img id="left-arrow" src="icons/arrow-left.png" onclick="moveLeft()">
+        <form id="input">
+          <input class="pageField" type="text" value="<%= curPage %>">
+        </form>
+        <%= "/" + pages %>
+        <img id="right-arrow" src="icons/arrow-right.png" onclick="moveRight()">
+      </div>
+      <br>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="javascripts/scoreList.js"></script>
+  </body>
+</html>

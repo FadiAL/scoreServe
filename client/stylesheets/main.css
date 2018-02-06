@@ -1,0 +1,28 @@
+.center{
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%)
+}
+h1{
+  text-align: center;
+}
+.pageView{
+  text-align: center;
+}
+img{
+  cursor: pointer;
+  margin-right: 20px;
+  margin-left: 20px;
+  vertical-align: middle;
+}
+.userScore{
+  background-color: cyan;
+}
+.pageField{
+  width: 50px
+}
+form{
+  display: inline;
+}
