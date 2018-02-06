@@ -2,26 +2,23 @@ var express = require('express');
 var router = express.Router();
 
 module.exports = function(db){
-  function insert(data, res){
+  function insert(reqBody, res){
     db.query(
-      "INSERT INTO scores (name, score, rank) " +
-      "VALUES (?, ?, 0)",
-      [data.person, data.score], function(err, result){
-        rank2(result.insertId, data.score, res);
-      });
-  }
-  function rank2(id, score, res){
-    db.query(
-      "SELECT COUNT(*) AS r FROM scores WHERE score > " + score + ";"
-    , function(err, data){
-      db.query(
-        "UPDATE scores SET rank = rank + 1 WHERE score < " + score + ";"
-      , function(){
+      "SELECT COUNT(*) AS r FROM scores WHERE score >= " + reqBody.score + ";"
+      , function(err, rankings){
+        if(err)
+          console.log(err);
         db.query(
-          "UPDATE scores SET rank = " + (data[0].r + 1) + " WHERE id = " + id + ";"
-        , function(){res.redirect('/scores?range=10&rank=' + data[0].r);});
+          "INSERT INTO scores (name, score, rank) " +
+          "VALUES (?, ?, ?)",
+          [reqBody.person, reqBody.score, rankings[0].r+1], function(err, result){
+            if(err)
+              console.log(err);
+            db.query(
+              "UPDATE scores SET rank = rank + 1 WHERE score < " + reqBody.score + ";"
+            , function(){res.redirect('/scores?range=10&rank=' + rankings[0].r)});
+          });
       });
-    });
   }
   function sendInfo(res, range, rank){
     db.query(
