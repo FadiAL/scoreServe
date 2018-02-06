@@ -45,6 +45,8 @@ function startServer(){
     var str = ''+req.query.rank;
     var num = str.slice(0, str.length-1) + '0';
     var range = req.query.range;
+    if(!range || !str)
+      res.redirect('/scores?range=10&rank=1');
     db.query(
       "SELECT name, score, rank FROM scores WHERE rank BETWEEN "
       + num + " AND " + (Number(num)+ Number(range))
